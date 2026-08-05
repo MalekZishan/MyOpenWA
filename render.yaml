@@ -1,0 +1,43 @@
+# Render.com Infrastructure-as-Code (Blueprint) for OpenWA
+services:
+  - type: web
+    name: openwa-whatsapp-gateway
+    env: docker
+    dockerfilePath: ./Dockerfile
+    plan: starter # Starter plan recommended for persistent disk and background WhatsApp process
+    region: singapore # Options: oregon, frankfort, singapore, ohio
+    healthCheckPath: /api/health/ready
+    autoDeploy: true
+    disk:
+      name: openwa-data
+      mountPath: /app/data
+      sizeGB: 1
+    envVars:
+      - key: PORT
+        value: 2785
+      - key: NODE_ENV
+        value: production
+      - key: AUTO_START_SESSIONS
+        value: "true"
+      - key: MAX_CONCURRENT_SESSIONS
+        value: "0"
+      - key: DATABASE_TYPE
+        value: sqlite
+      - key: DATABASE_NAME
+        value: ./data/openwa.sqlite
+      - key: DATABASE_SYNCHRONIZE
+        value: "false"
+      - key: MAIN_DATABASE_SYNCHRONIZE
+        value: "true"
+      - key: ENGINE_TYPE
+        value: whatsapp-web.js
+      - key: SESSION_DATA_PATH
+        value: ./data/sessions
+      - key: PUPPETEER_HEADLESS
+        value: "true"
+      - key: PUPPETEER_ARGS
+        value: --no-sandbox,--disable-setuid-sandbox,--disable-dev-shm-usage,--disable-gpu,--disable-background-timer-throttling,--disable-backgrounding-occluded-windows,--disable-renderer-backgrounding
+      - key: WWEBJS_ONBOARDING_CONTINUE_LABELS
+        value: Continue,Continuar,Weiter,Lanjutkan,Done,Ok,Got it
+      - key: CORS_ORIGINS
+        value: "*"
