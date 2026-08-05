@@ -16,7 +16,11 @@ services:
       - key: AUTO_START_SESSIONS
         value: "true"
       - key: MAX_CONCURRENT_SESSIONS
-        value: "0"
+        value: "1"
+      - key: NODE_OPTIONS
+        value: "--max-old-space-size=256"
+      - key: WWEBJS_AUTH_TIMEOUT_MS
+        value: "120000"
       - key: DATABASE_TYPE
         value: sqlite
       - key: DATABASE_NAME
@@ -32,7 +36,9 @@ services:
       - key: PUPPETEER_HEADLESS
         value: "true"
       - key: PUPPETEER_ARGS
-        value: --no-sandbox,--disable-setuid-sandbox,--disable-dev-shm-usage,--disable-gpu,--disable-background-timer-throttling,--disable-backgrounding-occluded-windows,--disable-renderer-backgrounding
+        value: --no-sandbox,--disable-setuid-sandbox,--disable-dev-shm-usage,--disable-gpu,--disable-accelerated-2d-canvas,--no-first-run,--no-zygote,--single-process,--disable-extensions,--disable-default-apps,--mute-audio,--disable-background-timer-throttling,--disable-backgrounding-occluded-windows,--disable-renderer-backgrounding
+      - key: CSP_UPGRADE_INSECURE_REQUESTS
+        value: "false"
       - key: WWEBJS_ONBOARDING_CONTINUE_LABELS
         value: Continue,Continuar,Weiter,Lanjutkan,Done,Ok,Got it
       - key: CORS_ORIGINS
