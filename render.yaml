@@ -30,7 +30,7 @@ services:
       - key: MAIN_DATABASE_SYNCHRONIZE
         value: "true"
       - key: ENGINE_TYPE
-        value: whatsapp-web.js
+        value: baileys
       - key: SESSION_DATA_PATH
         value: ./data/sessions
       - key: PUPPETEER_HEADLESS
