@@ -4,14 +4,10 @@ services:
     name: openwa-whatsapp-gateway
     env: docker
     dockerfilePath: ./Dockerfile
-    plan: starter # Starter plan recommended for persistent disk and background WhatsApp process
+    plan: free # 100% Free plan on Render
     region: singapore # Options: oregon, frankfort, singapore, ohio
     healthCheckPath: /api/health/ready
     autoDeploy: true
-    disk:
-      name: openwa-data
-      mountPath: /app/data
-      sizeGB: 1
     envVars:
       - key: PORT
         value: 2785
