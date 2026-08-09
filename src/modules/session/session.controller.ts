@@ -90,7 +90,7 @@ export class SessionController {
     type: SessionResponseDto,
   })
   @ApiResponse({ status: 404, description: 'Session not found' })
-  async findOne(@Param('id', ParseUUIDPipe) id: string): Promise<SessionResponseDto> {
+  async findOne(@Param('id') id: string): Promise<SessionResponseDto> {
     const session = await this.sessionService.findOne(id);
     return this.transformSession(session);
   }
@@ -109,7 +109,7 @@ export class SessionController {
       "carries `code: 'SESSION_NAME_TEARDOWN_PENDING'`; wait for it to settle and retry. No " +
       'destructive side effect runs before this refusal.',
   })
-  async delete(@Param('id', ParseUUIDPipe) id: string): Promise<void> {
+  async delete(@Param('id') id: string): Promise<void> {
     const session = await this.sessionService.findOne(id);
     await this.sessionService.delete(id);
     await this.auditService.logInfo(AuditAction.SESSION_DELETED, {
@@ -140,7 +140,7 @@ export class SessionController {
       'SESSION_NAME_TEARDOWN_PENDING`; wait for it to settle and retry. No destructive side ' +
       'effect runs before this refusal.',
   })
-  async start(@Param('id', ParseUUIDPipe) id: string): Promise<SessionResponseDto> {
+  async start(@Param('id') id: string): Promise<SessionResponseDto> {
     const session = await this.sessionService.start(id);
     await this.auditService.logInfo(AuditAction.SESSION_STARTED, {
       sessionId: session.id,
@@ -160,7 +160,7 @@ export class SessionController {
     type: SessionResponseDto,
   })
   @ApiResponse({ status: 404, description: 'Session not found' })
-  async stop(@Param('id', ParseUUIDPipe) id: string): Promise<SessionResponseDto> {
+  async stop(@Param('id') id: string): Promise<SessionResponseDto> {
     const session = await this.sessionService.stop(id);
     await this.auditService.logInfo(AuditAction.SESSION_STOPPED, {
       sessionId: session.id,
@@ -221,7 +221,7 @@ export class SessionController {
       "body carries `code: 'SESSION_LOGOUT_INCOMPLETE'`; `phone` is cleared and no success audit " +
       'is written. Start the session again and retry the logout.',
   })
-  async logout(@Param('id', ParseUUIDPipe) id: string): Promise<SessionResponseDto> {
+  async logout(@Param('id') id: string): Promise<SessionResponseDto> {
     const session = await this.sessionService.logout(id);
     await this.auditService.logInfo(AuditAction.SESSION_LOGGED_OUT, {
       sessionId: session.id,
@@ -242,7 +242,7 @@ export class SessionController {
   })
   @ApiResponse({ status: 400, description: 'Session is not started' })
   @ApiResponse({ status: 404, description: 'Session not found' })
-  async forceKill(@Param('id', ParseUUIDPipe) id: string): Promise<SessionResponseDto> {
+  async forceKill(@Param('id') id: string): Promise<SessionResponseDto> {
     const session = await this.sessionService.forceKill(id);
     await this.auditService.logInfo(AuditAction.SESSION_FORCE_KILLED, {
       sessionId: session.id,
@@ -265,7 +265,7 @@ export class SessionController {
     description: 'QR code not ready or session already authenticated',
   })
   @ApiResponse({ status: 404, description: 'Session not found' })
-  async getQRCode(@Param('id', ParseUUIDPipe) id: string): Promise<QRCodeResponseDto> {
+  async getQRCode(@Param('id') id: string): Promise<QRCodeResponseDto> {
     const qrCode = await this.sessionService.getQRCode(id);
     await this.auditService.logInfo(AuditAction.SESSION_QR_GENERATED, {
       sessionId: id,
@@ -281,7 +281,7 @@ export class SessionController {
   @ApiResponse({ status: 400, description: 'Session not started or already authenticated' })
   @ApiResponse({ status: 404, description: 'Session not found' })
   async requestPairingCode(
-    @Param('id', ParseUUIDPipe) id: string,
+    @Param('id') id: string,
     @Body() dto: RequestPairingCodeDto,
   ): Promise<PairingCodeResponseDto> {
     return this.sessionService.requestPairingCode(id, dto.phoneNumber);

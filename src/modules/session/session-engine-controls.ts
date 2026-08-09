@@ -106,10 +106,13 @@ export class SessionEngineControls {
   }
 
   /** findOne-or-404 with the last-error projection, mirroring SessionService.findOne. */
-  private async requireSession(id: string): Promise<Session> {
-    const session = await this.sessionRepository.findOne({ where: { id } });
+  private async requireSession(idOrName: string): Promise<Session> {
+    let session = await this.sessionRepository.findOne({ where: { id: idOrName } });
     if (!session) {
-      throw new NotFoundException(`Session with id '${id}' not found`);
+      session = await this.sessionRepository.findOne({ where: { name: idOrName } });
+    }
+    if (!session) {
+      throw new NotFoundException(`Session with id or name '${idOrName}' not found`);
     }
     return this.sessionErrors.attachTo(session);
   }
