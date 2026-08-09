@@ -1,4 +1,4 @@
-# Render.com Infrastructure-as-Code for OpenWA (Baileys Engine - 100% Free & No Sleep Crash)
+# Render.com Infrastructure-as-Code for OpenWA (Clean Render Setup - 100% Free & No Sleep Crash)
 services:
   - type: web
     name: openwa-whatsapp-gateway
@@ -20,21 +20,9 @@ services:
       - key: ENGINE_TYPE
         value: baileys
       - key: DATABASE_TYPE
-        value: postgres
-      - key: DATABASE_HOST
-        value: ep-bold-shape-axdizk5b.c-4.us-east-2.aws.neon.tech
-      - key: DATABASE_PORT
-        value: "5432"
-      - key: DATABASE_USERNAME
-        value: neondb_owner
-      - key: DATABASE_PASSWORD
-        value: npg_hdWy0g4HqAsK
+        value: sqlite
       - key: DATABASE_NAME
-        value: neondb
-      - key: DATABASE_SSL
-        value: "true"
-      - key: DATABASE_SSL_REJECT_UNAUTHORIZED
-        value: "false"
+        value: ./data/openwa.sqlite
       - key: DATABASE_SYNCHRONIZE
         value: "false"
       - key: MAIN_DATABASE_SYNCHRONIZE
@@ -44,4 +32,4 @@ services:
       - key: CSP_UPGRADE_INSECURE_REQUESTS
         value: "false"
       - key: CORS_ORIGINS
-        value: "https://openwa-whatsapp-gateway.onrender.com,http://localhost:2785"
+        value: "*"
