@@ -6,7 +6,7 @@ services:
     dockerfilePath: ./Dockerfile
     plan: free
     region: singapore
-    healthCheckPath: /api/health/ready
+    healthCheckPath: /api/health
     autoDeploy: true
     envVars:
       - key: PORT
@@ -34,7 +34,7 @@ services:
       - key: DATABASE_SSL
         value: "true"
       - key: DATABASE_SSL_REJECT_UNAUTHORIZED
-        value: "true"
+        value: "false"
       - key: DATABASE_SYNCHRONIZE
         value: "false"
       - key: MAIN_DATABASE_SYNCHRONIZE
