@@ -62,6 +62,16 @@ export function loadEnvironment(): void {
 
   // 3. Dashboard-saved config (does not override .env or process env)
   if (fs.existsSync(generatedEnvPath)) {
+    try {
+      let content = fs.readFileSync(generatedEnvPath, 'utf8');
+      if (content.includes('ENGINE_TYPE=whatsapp-web.js')) {
+        content = content.replace(/ENGINE_TYPE=whatsapp-web\.js/g, 'ENGINE_TYPE=baileys');
+        fs.writeFileSync(generatedEnvPath, content, 'utf8');
+        console.log('[Bootstrap] Migrated saved configuration engine to baileys');
+      }
+    } catch {
+      /* best-effort */
+    }
     console.log('[Bootstrap] Loading saved configuration from:', generatedEnvPath);
     dotenv.config({ path: generatedEnvPath, override: false });
   } else {
@@ -71,6 +81,8 @@ export function loadEnvironment(): void {
 # Generated automatically on first run
 # Edit via Dashboard > Infrastructure or modify this file directly.
 # Note: values in process env or project .env take precedence over this file.
+
+ENGINE_TYPE=baileys
 
 # Database (SQLite - no external service required)
 DATABASE_TYPE=sqlite
