@@ -1,0 +1,47 @@
+# Render.com Infrastructure-as-Code for OpenWA (Baileys Engine - 100% Free & No Sleep Crash)
+services:
+  - type: web
+    name: openwa-whatsapp-gateway
+    env: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    region: singapore
+    healthCheckPath: /api/health/ready
+    autoDeploy: true
+    envVars:
+      - key: PORT
+        value: 2785
+      - key: NODE_ENV
+        value: production
+      - key: AUTO_START_SESSIONS
+        value: "true"
+      - key: API_MASTER_KEY
+        value: "mysecretkey"
+      - key: ENGINE_TYPE
+        value: baileys
+      - key: DATABASE_TYPE
+        value: postgres
+      - key: DATABASE_HOST
+        value: ep-bold-shape-axdizk5b.c-4.us-east-2.aws.neon.tech
+      - key: DATABASE_PORT
+        value: "5432"
+      - key: DATABASE_USERNAME
+        value: neondb_owner
+      - key: DATABASE_PASSWORD
+        value: npg_hdWy0g4HqAsK
+      - key: DATABASE_NAME
+        value: neondb
+      - key: DATABASE_SSL
+        value: "true"
+      - key: DATABASE_SSL_REJECT_UNAUTHORIZED
+        value: "true"
+      - key: DATABASE_SYNCHRONIZE
+        value: "false"
+      - key: MAIN_DATABASE_SYNCHRONIZE
+        value: "true"
+      - key: SESSION_DATA_PATH
+        value: ./data/sessions
+      - key: CSP_UPGRADE_INSECURE_REQUESTS
+        value: "false"
+      - key: CORS_ORIGINS
+        value: "https://openwa-whatsapp-gateway.onrender.com,http://localhost:2785"

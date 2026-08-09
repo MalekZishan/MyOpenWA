@@ -38,6 +38,8 @@ describe('data CLI DataSource', () => {
     // (auth/audit) file.
     const prevMain = process.env.MAIN_DATABASE_NAME;
     const prevData = process.env.DATABASE_NAME;
+    const prevType = process.env.DATABASE_TYPE;
+    process.env.DATABASE_TYPE = 'sqlite';
     process.env.MAIN_DATABASE_NAME = '/tmp/cli-guard-main.sqlite';
     // A non-normalized relative spelling of the same file must be caught too.
     process.env.DATABASE_NAME = '/tmp/../tmp/cli-guard-main.sqlite';
@@ -52,6 +54,8 @@ describe('data CLI DataSource', () => {
       else delete process.env.MAIN_DATABASE_NAME;
       if (prevData !== undefined) process.env.DATABASE_NAME = prevData;
       else delete process.env.DATABASE_NAME;
+      if (prevType !== undefined) process.env.DATABASE_TYPE = prevType;
+      else delete process.env.DATABASE_TYPE;
       jest.resetModules();
     }
   });
