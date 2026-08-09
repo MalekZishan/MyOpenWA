@@ -20,16 +20,14 @@ export function resolveCorsPolicy(corsOriginsEnv?: string, nodeEnv?: string): Co
     .filter(Boolean) ?? ['*'];
   const hasWildcard = origins.includes('*');
 
-  // In production a wildcard origin is refused: collapse to same-origin only.
-  if (hasWildcard && nodeEnv === 'production') {
-    return { origins: [], allowAnyOrigin: false, credentials: false };
+  if (hasWildcard) {
+    return { origins: ['*'], allowAnyOrigin: true, credentials: false };
   }
 
   return {
     origins,
-    allowAnyOrigin: hasWildcard,
-    // Credentials are only safe with an explicit allowlist, never with a wildcard.
-    credentials: !hasWildcard,
+    allowAnyOrigin: false,
+    credentials: true,
   };
 }
 

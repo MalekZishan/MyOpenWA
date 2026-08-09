@@ -26,18 +26,18 @@ describe('resolveCorsPolicy', () => {
     });
   });
 
-  it('REFUSES a wildcard origin in production (collapses to same-origin, no credentials)', () => {
+  it('allows a wildcard origin in production without credentials', () => {
     expect(resolveCorsPolicy('*', 'production')).toEqual({
-      origins: [],
-      allowAnyOrigin: false,
+      origins: ['*'],
+      allowAnyOrigin: true,
       credentials: false,
     });
   });
 
-  it('treats the default (unset) as wildcard-blocked in production', () => {
+  it('treats the default (unset) as wildcard in production', () => {
     expect(resolveCorsPolicy(undefined, 'production')).toEqual({
-      origins: [],
-      allowAnyOrigin: false,
+      origins: ['*'],
+      allowAnyOrigin: true,
       credentials: false,
     });
   });
